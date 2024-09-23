@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
-    "module": "commonjs",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
     "declaration": true,
     "removeComments": true,
     "emitDecoratorMetadata": true,
@@ -10,6 +11,12 @@
     "sourceMap": true,
     "outDir": "./dist",
     "baseUrl": "./",
+    "paths": {
+      "@postgres": ["./src/postgres"],
+      "@modules": ["./src/modules"],
+      "@utils": ["./src/utils"],
+      "@config": ["./src/config"]
+    },
     "incremental": true,
     "skipLibCheck": true,
     "strictNullChecks": false,

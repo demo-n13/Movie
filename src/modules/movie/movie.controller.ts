@@ -1,7 +1,7 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
 import { Movie, MovieService } from './movie.service';
 import { CreateMovieDto } from './dtos';
-import { CreateMovieResponse } from './interfaces';
+// import { CreateMovieResponse } from './interfaces';
 
 @Controller({
   path: 'movies',
@@ -10,8 +10,8 @@ export class MovieController {
   constructor(private readonly movieService: MovieService) {}
 
   @Get('/')
-  async getMovies(): Promise<any[]> {
-    return await this.movieService.getAllMovies();
+  async getMovies(@Query() queries: Record<string, string>): Promise<any[]> {
+    return await this.movieService.getAllMovies(queries);
   }
 
   @Get('/:movieId')

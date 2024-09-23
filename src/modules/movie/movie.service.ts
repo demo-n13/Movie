@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import { CreateMovieRequest, CreateMovieResponse } from './interfaces';
-import { PgService } from 'src/postgres/pg.service';
+import { CreateMovieRequest } from './interfaces';
+import { PgService } from '@postgres';
+import { ApiFeature } from '@utils';
 
 export declare interface Movie {
   id: number;
@@ -13,8 +14,20 @@ export declare interface Movie {
 export class MovieService {
   constructor(private readonly postgres: PgService) {}
 
-  async getAllMovies(): Promise<any[]> {
-    return await this.postgres.fetchData('SELECT * FROM movies');
+  async getAllMovies(queries: Record<string, string>): Promise<any> {
+    console.log(queries.page);
+    const query = new ApiFeature('movies')
+      .paginate(+queries.page, +queries.limit)
+      .limitFields(queries?.fields ? queries.fields.split(',') : ['*'])
+      .sort("rating", "ASC")
+      .getQuery();
+
+    const data = await this.postgres.fetchData(query.queryString);
+    return {
+      limit: query.limit,
+      page: query.page,
+      data,
+    };
   }
 
   async getSingleMovie(movieId: number): Promise<any> {
