@@ -14,12 +14,13 @@ export declare interface Movie {
 export class MovieService {
   constructor(private readonly postgres: PgService) {}
 
-  async getAllMovies(queries: Record<string, string>): Promise<any> {
-    console.log(queries.page);
+  async getAllMovies(queries: Record<string, any>): Promise<any> {
+    // throw new Error("Not supported")
     const query = new ApiFeature('movies')
-      .paginate(+queries.page, +queries.limit)
+      .paginate(queries?.page || 1, queries?.limit || 10)
       .limitFields(queries?.fields ? queries.fields.split(',') : ['*'])
-      .sort("rating", "ASC")
+      .sort(queries?.sort)
+      // .filter(queries)
       .getQuery();
 
     const data = await this.postgres.fetchData(query.queryString);

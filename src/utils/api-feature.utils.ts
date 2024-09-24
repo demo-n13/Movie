@@ -33,7 +33,26 @@ export class ApiFeature {
     return this;
   }
 
-  filter() {}
+  filter(queries: Record<string, any>) {
+    const allQuery = { ...queries };
+    const excludedFields = ['limit', 'page', 'sort', 'fields'];
+
+    excludedFields.forEach((exf) => {
+      delete allQuery[exf];
+    });
+
+    console.log(allQuery);
+
+    this.#_filterOptions.filters = {
+      name: "= 'O'tkan kunlar'",
+      rating: 'BETWEEN 3 AND 5',
+      year: '< 2000',
+    };
+
+    // { name: "Oq kema", rating: "3~5", year: "<2000" } => `WHERE name = "Oq kema" AND rating BETWEEN 3 AND 5 AND year < 2000`
+
+    return this;
+  }
 
   limitFields(selectedFields: string[]) {
     this.#_filterOptions.fields = selectedFields;
@@ -41,7 +60,14 @@ export class ApiFeature {
     return this;
   }
 
-  sort(sortField: string, sortOrder: SortOrderType = 'ASC') {
+  sort(sortField: string = this.#_filterOptions.sort) {
+    let sortOrder: SortOrderType = 'ASC';
+
+    if (sortField.at(0) == '-') {
+      sortField = sortField.slice(1, sortField.length);
+      sortOrder = 'DESC';
+    }
+
     this.#_filterOptions.sort = sortField;
     this.#_filterOptions.sortOrder = sortOrder;
 

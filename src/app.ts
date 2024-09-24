@@ -2,6 +2,8 @@ import { Module } from '@nestjs/common';
 import { MovieModule } from '@modules';
 import { ConfigModule } from '@nestjs/config';
 import dbConfig from './config/db.config';
+import { APP_FILTER } from '@nestjs/core';
+import { ExceptionHandlerFilter } from './filters';
 
 @Module({
   imports: [
@@ -11,6 +13,12 @@ import dbConfig from './config/db.config';
       load: [dbConfig],
     }),
     MovieModule,
+  ],
+  providers: [
+    {
+      useClass: ExceptionHandlerFilter,
+      provide: APP_FILTER,
+    },
   ],
 })
 export class AppModule {}
