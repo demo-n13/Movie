@@ -1,7 +1,6 @@
-import { Body, Controller, Get, HttpCode, HttpStatus, Param, Post, Query, UseFilters } from '@nestjs/common';
+import { Body, Controller, Get, HttpCode, HttpStatus, Param, Post, Query } from '@nestjs/common';
 import { MovieService } from './movie.service';
 import { CreateMovieDto } from './dtos';
-import { ExceptionHandlerFilter } from 'src/filters';
 // import { CreateMovieResponse } from './interfaces';
 
 @Controller({
@@ -12,7 +11,6 @@ export class MovieController {
 
   @Get('/')
   @HttpCode(HttpStatus.ACCEPTED)
-  @UseFilters(ExceptionHandlerFilter)
   async getMovies(@Query() queries: Record<string, string>): Promise<any[]> {
     return await this.movieService.getAllMovies(queries);
   }
@@ -23,7 +21,6 @@ export class MovieController {
   }
 
   @Post('/add')
-  @UseFilters(ExceptionHandlerFilter)
   async addMovie(@Body() createMovieData: CreateMovieDto): Promise<any> {
     return await this.movieService.createMovie(createMovieData);
   }

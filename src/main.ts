@@ -15,6 +15,7 @@ async function bootstrap() {
     app.use(morgan('tiny'));
   }
 
+
   await app.listen(
     config.get<number>('PORT'),
     config.get<string>('HOST'),
