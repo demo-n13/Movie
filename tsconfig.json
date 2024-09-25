@@ -15,7 +15,10 @@
       "@postgres": ["./src/postgres"],
       "@modules": ["./src/modules"],
       "@utils": ["./src/utils"],
-      "@config": ["./src/config"]
+      "@config": ["./src/config"],
+      "@pipes": ["./src/pipes"],
+      "@filters": ["./src/filters"],
+      "@middlewares": ["./src/middlewares"]
     },
     "incremental": true,
     "skipLibCheck": true,
