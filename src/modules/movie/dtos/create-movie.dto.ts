@@ -1,11 +1,11 @@
-import { IsNumber, IsString, Max, Min } from 'class-validator';
+import { IsInt, IsNumber, IsString, Max, Min } from 'class-validator';
 import { CreateMovieRequest } from '../interfaces';
 
 export class CreateMovieDto implements CreateMovieRequest {
   @IsString()
   name: string;
 
-  @IsNumber()
+  @IsInt()
   @Max(new Date().getFullYear())
   @Min(1950)
   year: number;
