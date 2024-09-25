@@ -18,7 +18,8 @@
       "@config": ["./src/config"],
       "@pipes": ["./src/pipes"],
       "@filters": ["./src/filters"],
-      "@middlewares": ["./src/middlewares"]
+      "@middlewares": ["./src/middlewares"],
+      "@interceptors": ["./src/interceptor"]
     },
     "incremental": true,
     "skipLibCheck": true,

@@ -8,15 +8,22 @@ import {
   // ParseIntPipe,
   Post,
   Query,
+  UseInterceptors,
 } from '@nestjs/common';
 import { MovieService } from './movie.service';
 import { CreateMovieDto, GetMoviesQueriesDto } from './dtos';
-import { ParseIntCustomPipe } from '@pipes';
-// import { CreateMovieResponse } from './interfaces';
+import { ParseEnumPipeCustom, ParseIntCustomPipe } from '@pipes';
+import { LoggingInterceptor } from '@interceptors';
+
+enum StatusEnum {
+  active,
+  inactive,
+}
 
 @Controller({
   path: 'movies',
 })
+@UseInterceptors(LoggingInterceptor)
 export class MovieController {
   constructor(private readonly movieService: MovieService) {}
 
@@ -26,10 +33,12 @@ export class MovieController {
     return await this.movieService.getAllMovies(queries);
   }
 
-  @Get('/:movieId')
+  @Get('/:movieId/:status')
   async getSingleMovie(
     @Param('movieId', new ParseIntCustomPipe(13)) movieId: number,
+    @Param('status', new ParseEnumPipeCustom(StatusEnum)) status: string,
   ): Promise<any> {
+    console.log(status);
     return await this.movieService.getSingleMovie(movieId);
   }
 
