@@ -2,8 +2,9 @@ import { Module } from '@nestjs/common';
 import { MovieModule } from '@modules';
 import { ConfigModule } from '@nestjs/config';
 import dbConfig from './config/db.config';
-import { APP_FILTER } from '@nestjs/core';
+import { APP_FILTER, APP_GUARD } from '@nestjs/core';
 import { ExceptionHandlerFilter } from './filters';
+import { CheckRolesGuard } from '@guards';
 
 @Module({
   imports: [
@@ -18,6 +19,10 @@ import { ExceptionHandlerFilter } from './filters';
     {
       useClass: ExceptionHandlerFilter,
       provide: APP_FILTER,
+    },
+    {
+      useClass: CheckRolesGuard,
+      provide: APP_GUARD,
     },
   ],
 })

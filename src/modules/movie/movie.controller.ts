@@ -14,6 +14,7 @@ import { MovieService } from './movie.service';
 import { CreateMovieDto, GetMoviesQueriesDto } from './dtos';
 import { ParseEnumPipeCustom, ParseIntCustomPipe } from '@pipes';
 import { LoggingInterceptor } from '@interceptors';
+import { Roles } from '@decorators';
 
 enum StatusEnum {
   active,
@@ -42,6 +43,7 @@ export class MovieController {
     return await this.movieService.getSingleMovie(movieId);
   }
 
+  @Roles(['admin'])
   @Post('/add')
   async addMovie(@Body() createMovieData: CreateMovieDto): Promise<any> {
     return await this.movieService.createMovie(createMovieData);

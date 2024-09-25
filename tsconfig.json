@@ -19,7 +19,9 @@
       "@pipes": ["./src/pipes"],
       "@filters": ["./src/filters"],
       "@middlewares": ["./src/middlewares"],
-      "@interceptors": ["./src/interceptor"]
+      "@interceptors": ["./src/interceptor"],
+      "@guards": ["./src/guards"],
+      "@decorators": ["./src/decorators"]
     },
     "incremental": true,
     "skipLibCheck": true,
